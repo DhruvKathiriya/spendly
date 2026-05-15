@@ -66,8 +66,8 @@ def login():
             return render_template("login.html")
 
         session["user_id"] = user["id"]
-        flash("Welcome back!", "success")
-        return redirect(url_for("landing"))
+        session["user_name"] = user["name"]
+        return redirect(url_for("profile"))
 
     return render_template("login.html")
 
@@ -95,7 +95,37 @@ def logout():
 
 @app.route("/profile")
 def profile():
-    return "Profile page — coming in Step 4"
+    if not session.get("user_id"):
+        return redirect(url_for("login"))
+
+    user = {
+        "name": "Alex Johnson",
+        "email": "alex@example.com",
+        "member_since": "January 2025",
+        "initials": "AJ",
+    }
+    stats = {
+        "total_spent": "₹24,850",
+        "transaction_count": 12,
+        "top_category": "Food",
+    }
+    transactions = [
+        {"date": "2025-05-10", "description": "Grocery run", "category": "Food", "amount": "₹1,240"},
+        {"date": "2025-05-08", "description": "Metro card recharge", "category": "Transport", "amount": "₹500"},
+        {"date": "2025-05-06", "description": "Electricity bill", "category": "Bills", "amount": "₹3,200"},
+        {"date": "2025-05-03", "description": "Doctor consultation", "category": "Health", "amount": "₹800"},
+        {"date": "2025-04-29", "description": "Netflix subscription", "category": "Entertainment", "amount": "₹649"},
+        {"date": "2025-04-25", "description": "Shoes", "category": "Shopping", "amount": "₹2,499"},
+    ]
+    categories = [
+        {"name": "Food",          "amount": "₹8,400",  "percent": 34},
+        {"name": "Bills",         "amount": "₹6,200",  "percent": 25},
+        {"name": "Transport",     "amount": "₹4,100",  "percent": 16},
+        {"name": "Health",        "amount": "₹3,800",  "percent": 15},
+        {"name": "Entertainment", "amount": "₹2,350",  "percent": 10},
+    ]
+    return render_template("profile.html", user=user, stats=stats,
+                           transactions=transactions, categories=categories)
 
 
 @app.route("/expenses/add")

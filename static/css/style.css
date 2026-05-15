@@ -113,6 +113,9 @@ a { color: inherit; text-decoration: none; }
 
 .nav-cta:hover { background: var(--accent) !important; }
 
+.nav-username { font-size: 0.9rem; font-weight: 500; color: var(--ink-soft); text-decoration: none; }
+.nav-username:hover { color: var(--accent); }
+
 /* ------------------------------------------------------------------ */
 /* Main                                                                */
 /* ------------------------------------------------------------------ */
